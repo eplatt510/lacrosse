@@ -2,20 +2,40 @@
 var player1 = 0;
 var player2 = 0;
 var faceoffWinner = 0;
-var faceoffs;
+// var faceoffs = 0;
+// localStorage.setItem("faceoffs", faceoffs);
+var teams = [];
+team1 = JSON.parse(localStorage.getItem("teams[0]"));
+team2 = JSON.parse(localStorage.getItem("teams[1]"));
+var enterTeams = document.querySelector("#enterTeams");
+var enterTeamsModal = document.querySelector("#enterTeamsModal");
+var teamsSubmit = document.querySelector("#teamsSubmit");
 var faceoff = document.querySelector("#faceoff");
 var faceoffModal = document.querySelector("#faceoffModal")
-//var span = document.querySelector(".close");
 var faceoffPlayers = document.querySelector("#faceoffPlayers");
 var faceoffWinnerModal = document.querySelector("#faceoffWinnerModal");
 var faceOffForm = document.querySelector("#faceOffForm");
 var player1Display = document.querySelector("#player1Wins");
 var player2Display = document.querySelector("#player2Wins");
 var close = document.getElementsByClassName("close");
+var homeTeam = document.querySelector(".homeTeam");
+var awayTeam = document.querySelector(".awayTeam");
 
-if(!localStorage.getItem(faceoffs)){
-  faceoffs = 0;
-}
+// if(!localStorage.getItem(faceoffs)){
+//   faceoffs = 0;
+// }
+enterTeams.addEventListener("click", function(){
+  enterTeamsModal.style.display = "block";
+})
+
+teamsSubmit.addEventListener("click", function(){
+  teams[0] = document.querySelector("#team1").value;
+  teams[1] = document.querySelector("#team2").value;
+  console.log(teams[0] + " " + teams[1]);
+  localStorage.setItem("teams[0]", JSON.stringify(teams[0]));
+  localStorage.setItem("teams[1]", JSON.stringify(teams[1]));
+})
+
 faceoff.addEventListener("click", function(){
   faceoffModal.style.display = "block";
 })
@@ -29,6 +49,8 @@ for (var i = 0; i < close.length; i++){
     assistModal.style.display = "none";
     shotModal.style.display = "none";
     penaltyModal.style.display = "none";
+    goalieModal.style.display = "none";
+    enterTeamsModal.style.display = "none";
   })
 }
 // When the user clicks anywhere outside of the modal, close it
@@ -46,22 +68,24 @@ faceoffPlayers.addEventListener("click", function(){
   faceoffWinnerModal.style.display = "block";
   player1Display.textContent = player1;
   player2Display.textContent = player2;
-  document.querySelector("#faceOffForm").reset();
+  //document.querySelector("#faceOffForm").reset();
 })
 
 player1Display.addEventListener("click", function(){
   faceoffWinner = player1;
-  localStorage.setItem(player1, faceoffs++);
+  //localStorage.setItem(player1, faceoffs++);
   faceoffWinnerModal.style.display = "none";
-  alert(player1 + " has won " + faceoffs + " faceoffs.");
+  alert(player1 + " has won the faceoff");
+  //alert(player1 + " has won " + faceoffs + " faceoffs.");
 
 })
 
 player2Display.addEventListener("click", function(){
   faceoffWinner = player1;
-  localStorage.setItem(player1, faceoffs++);
+  //localStorage.setItem(player1, faceoffs++);
   faceoffWinnerModal.style.display = "none";
-  alert(player1 + " has won " + faceoffs + " faceoffs.");
+  alert(player1 + " has won the faceoff");
+  // + faceoffs + " faceoffs.");
 
 })
 
@@ -70,15 +94,26 @@ var groundBall = document.querySelector("#groundBall");
 var groundBallModal = document.querySelector("#groundBallModal");
 var groundBallWins = document.querySelector("#groundBallWins");
 var groundBallWinner = 0;
+var groundBallWinTeam = "";
 
 groundBall.addEventListener("click", function(){
+  homeTeam.textContent = team1;
+  awayTeam.textContent = team2;
   groundBallModal.style.display = "block";
+})
+
+homeTeam.addEventListener("click", function(){
+  groundBallWinTeam = team1;
+})
+
+awayTeam.addEventListener("click", function(){
+  groundBallWinTeam = team2;
 })
 
 groundBallWins.addEventListener("click", function(){
   groundBallWinner = document.querySelector("#groundBallWinner").value;
   groundBallModal.style.display = "none";
-  alert(groundBallWinner + " got the Ground Ball");
+  alert(groundBallWinner + " of " + groundBallWinTeam + " got the Ground Ball");
 })
 
 //Assist
@@ -141,3 +176,17 @@ penaltySubmit.addEventListener("click", function(){
 
 //Golie Save
 var goalieSave = document.querySelector("#goalieSave");
+var goalieModal = document.querySelector("#goalieModal");
+var goaliePlayer = document.querySelector("#goaliePlayer");
+var goalieTaker = document.querySelector("#goalieTaker");
+
+goalieSave.addEventListener("click", function(){
+  goalieModal.style.display = "block";
+})
+
+goaliePlayer.addEventListener("click", function(){
+  goalieTaker = document.querySelector("#goalieTaker").value;
+  goalieModal.style.display = "none";
+  alert(goalieTaker + " saved the shot!");
+
+})

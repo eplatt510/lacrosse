@@ -7,9 +7,25 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
   </head>
   <body>
+<div class="">
+  <h1>Lacrosse Stats<span><button><a href="#" id="enterTeams">Enter Teams<a></button></span></h1>
+</div>
 
-<h1>Lacrosse Stats</h1>
 
+<!-- Enter Teams Modal -->
+
+<div id="enterTeamsModal" class="modal">
+  <form class="enterTeamsForm" method="post">
+    <div class="modal-content">
+      <p>Enter Teams</p>
+      <span class="close">&times;</span>
+      <input type="text" class="form-control" id="team1" placeholder="Home Team">
+      <input type="text" class="form-control" id="team2" placeholder="Visiting Team">
+      <button type="button" id="teamsSubmit">OK</button>
+    </div>
+  </form>
+
+</div>
 <!-- Faceoff Modal -->
 <div id="faceoffModal" class="modal">
 
@@ -46,9 +62,9 @@
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span>
-    <input type="number" class="form-control" id="groundBallWinner" placeholder="# of Ground Ball Winner">
+    <input type="tel" class="form-control" id="groundBallWinner" placeholder="# of Ground Ball Winner">
 
-    <button type="button" id="groundBallWins">OK</button>
+    <button type="button" id="groundBallWins" class="displayTeams"><a href="#" class="homeTeam" ><a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <a href="#" class="awayTeam"><a></button>
   </div>
 
 </div>
@@ -59,8 +75,8 @@
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span>
-    <input type="number" class="form-control" id="scorePlayer" placeholder="Player Scoring">
-    <input type="number" class="form-control" id="assistPlayer" placeholder="Player Assisting">
+    <input type="tel" class="form-control" id="scorePlayer" placeholder="Player Scoring">
+    <input type="tel" class="form-control" id="assistPlayer" placeholder="Player Assisting">
 
     <button type="button" id="assistSubmit">OK</button>
   </div>
@@ -73,7 +89,7 @@
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span>
-    <input type="number" class="form-control" id="shotTaker" placeholder="# of Shot Taker">
+    <input type="tel" class="form-control" id="shotTaker" placeholder="# of Shot Taker">
 
     <button type="button" id="shotPlayer">OK</button>
   </div>
@@ -87,7 +103,7 @@
   <form id="penaltyForm" action="index.html" method="post">
     <div class="modal-content">
       <span class="close">&times;</span>
-      <input type="number" class="form-control" id="penaltyAgainst" placeholder="Penalty #">
+      <input type="tel" class="form-control" id="penaltyAgainst" placeholder="Penalty #">
       <select id="penaltyList">
         <option value="Penalty">Penalty</option>
         <option value="Slashing">Slashing</option>
@@ -117,6 +133,19 @@
     </div>
   </form>
 
+
+</div>
+
+<!-- Goalie Save Modal -->
+<div id="goalieModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <input type="tel" class="form-control" id="goalieTaker" placeholder="# of Goalie">
+
+    <button type="button" id="goaliePlayer">OK</button>
+  </div>
 
 </div>
 
