@@ -1,12 +1,12 @@
-//Faceoff
+
 var player1 = 0;
 var player2 = 0;
 var faceoffWinner = 0;
 // var faceoffs = 0;
 // localStorage.setItem("faceoffs", faceoffs);
 var teams = [];
-team1 = JSON.parse(localStorage.getItem("teams[0]"));
-team2 = JSON.parse(localStorage.getItem("teams[1]"));
+var team1 = JSON.parse(localStorage.getItem("teams[0]"));
+var team2 = JSON.parse(localStorage.getItem("teams[1]"));
 var enterTeams = document.querySelector("#enterTeams");
 var enterTeamsModal = document.querySelector("#enterTeamsModal");
 var teamsSubmit = document.querySelector("#teamsSubmit");
@@ -18,8 +18,23 @@ var faceOffForm = document.querySelector("#faceOffForm");
 var player1Display = document.querySelector("#player1Wins");
 var player2Display = document.querySelector("#player2Wins");
 var close = document.getElementsByClassName("close");
-var homeTeam = document.querySelector(".homeTeam");
-var awayTeam = document.querySelector(".awayTeam");
+var square = document.querySelectorAll(".square");
+var homeTeam = document.querySelectorAll(".homeTeam");
+var awayTeam = document.querySelectorAll(".awayTeam");
+//console.log(homeTeam);
+for (var i = 0; i < square.length; i++){
+  square[i].addEventListener("click", function(){
+    for (var j = 0; j < homeTeam.length; j++){
+      homeTeam[j].textContent = team1;
+    }
+    for (var k = 0; k < awayTeam.length; k++){
+      awayTeam[k].textContent = team2;
+    }
+    //awayTeam.textContent = team2;
+    console.log(homeTeam[j] + awayTeam[k]);
+  })
+}
+
 
 // if(!localStorage.getItem(faceoffs)){
 //   faceoffs = 0;
@@ -34,8 +49,9 @@ teamsSubmit.addEventListener("click", function(){
   console.log(teams[0] + " " + teams[1]);
   localStorage.setItem("teams[0]", JSON.stringify(teams[0]));
   localStorage.setItem("teams[1]", JSON.stringify(teams[1]));
+  enterTeamsModal.style.display = "none";
 })
-
+//Faceoff
 faceoff.addEventListener("click", function(){
   faceoffModal.style.display = "block";
 })
@@ -95,18 +111,20 @@ var groundBallModal = document.querySelector("#groundBallModal");
 var groundBallWins = document.querySelector("#groundBallWins");
 var groundBallWinner = 0;
 var groundBallWinTeam = "";
+var groundHome = document.querySelector("#groundHome");
+var groundAway = document.querySelector("#groundAway");
 
 groundBall.addEventListener("click", function(){
-  homeTeam.textContent = team1;
-  awayTeam.textContent = team2;
+  // homeTeam.textContent = team1;
+  // awayTeam.textContent = team2;
   groundBallModal.style.display = "block";
 })
 
-homeTeam.addEventListener("click", function(){
+groundHome.addEventListener("click", function(){
   groundBallWinTeam = team1;
 })
 
-awayTeam.addEventListener("click", function(){
+groundAway.addEventListener("click", function(){
   groundBallWinTeam = team2;
 })
 
@@ -122,19 +140,25 @@ var assistModal = document.querySelector("#assistModal");
 var assistSubmit = document.querySelector("#assistSubmit");
 var scorePlayer = 0;
 var assistPlayer = 0;
-
+var scoreHome = document.querySelector("#scoreHome");
+var scoreAway = document.querySelector("#scoreAway");
 
 assist.addEventListener("click", function(){
-  homeTeam.textContent = JSON.parse(localStorage.getItem("teams[0]"));
-  awayTeam.textContent = team2;
   assistModal.style.display = "block";
 })
 
-assistSubmit.addEventListener("click", function(){
+scoreHome.addEventListener("click", function(){
   scorePlayer = document.querySelector("#scorePlayer").value;
   assistPlayer = document.querySelector("#assistPlayer").value;
   assistModal.style.display = "none";
-  alert(scorePlayer + " scored and " + assistPlayer + " assisted!");
+  alert(team1 + " scores! " + scorePlayer + " scored and " + assistPlayer + " assisted!");
+})
+
+scoreAway.addEventListener("click", function(){
+  scorePlayer = document.querySelector("#scorePlayer").value;
+  assistPlayer = document.querySelector("#assistPlayer").value;
+  assistModal.style.display = "none";
+  alert(team2 + " scores! " + scorePlayer + " scored and " + assistPlayer + " assisted!");
 })
 
 //Shot
