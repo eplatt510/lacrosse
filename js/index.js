@@ -2,8 +2,6 @@
 var player1 = 0;
 var player2 = 0;
 var faceoffWinner = 0;
-// var faceoffs = 0;
-// localStorage.setItem("faceoffs", faceoffs);
 var teams = [];
 var team1 = JSON.parse(localStorage.getItem("teams[0]"));
 var team2 = JSON.parse(localStorage.getItem("teams[1]"));
@@ -21,24 +19,18 @@ var close = document.getElementsByClassName("close");
 var square = document.querySelectorAll(".square");
 var homeTeam = document.querySelectorAll(".homeTeam");
 var awayTeam = document.querySelectorAll(".awayTeam");
-//console.log(homeTeam);
+
 for (var i = 0; i < square.length; i++){
   square[i].addEventListener("click", function(){
     for (var j = 0; j < homeTeam.length; j++){
       homeTeam[j].textContent = team1;
-      console.log(homeTeam[j]);
     }
     for (var k = 0; k < awayTeam.length; k++){
       awayTeam[k].textContent = team2;
-      console.log(awayTeam[k]);
     }
   })
 }
 
-
-// if(!localStorage.getItem(faceoffs)){
-//   faceoffs = 0;
-// }
 enterTeams.addEventListener("click", function(){
   enterTeamsModal.style.display = "block";
 })
@@ -50,10 +42,6 @@ teamsSubmit.addEventListener("click", function(){
   localStorage.setItem("teams[0]", JSON.stringify(teams[0]));
   localStorage.setItem("teams[1]", JSON.stringify(teams[1]));
   enterTeamsModal.style.display = "none";
-})
-//Faceoff
-faceoff.addEventListener("click", function(){
-  faceoffModal.style.display = "block";
 })
 
 // When the user clicks on close (x), close the modal
@@ -76,6 +64,13 @@ window.onclick = function(event) {
     }
 }
 
+//Faceoff
+faceoff.addEventListener("click", function(){
+  document.querySelector("#player1").placeholder = team1;
+  document.querySelector("#player2").placeholder = team2;
+  faceoffModal.style.display = "block";
+})
+
 faceoffPlayers.addEventListener("click", function(){
   faceoffModal.style.display = "none";
   player1 = document.querySelector("#player1").value;
@@ -89,11 +84,8 @@ faceoffPlayers.addEventListener("click", function(){
 
 player1Display.addEventListener("click", function(){
   faceoffWinner = player1;
-  //localStorage.setItem(player1, faceoffs++);
   faceoffWinnerModal.style.display = "none";
   alert(player1 + " has won the faceoff");
-  //alert(player1 + " has won " + faceoffs + " faceoffs.");
-
 })
 
 player2Display.addEventListener("click", function(){
@@ -108,15 +100,13 @@ player2Display.addEventListener("click", function(){
 //Ground Ball
 var groundBall = document.querySelector("#groundBall");
 var groundBallModal = document.querySelector("#groundBallModal");
-var groundBallWins = document.querySelector("#groundBallWins");
+//var groundBallWins = document.querySelector("#groundBallWins");
 var groundBallWinner = 0;
 var groundBallWinTeam = "";
 var groundHome = document.querySelector("#groundHome");
 var groundAway = document.querySelector("#groundAway");
 
 groundBall.addEventListener("click", function(){
-  // homeTeam.textContent = team1;
-  // awayTeam.textContent = team2;
   groundBallModal.style.display = "block";
 })
 
@@ -137,7 +127,7 @@ groundBallWins.addEventListener("click", function(){
 //Assist
 var assist = document.querySelector("#assist");
 var assistModal = document.querySelector("#assistModal");
-var assistSubmit = document.querySelector("#assistSubmit");
+//var assistSubmit = document.querySelector("#assistSubmit");
 var scorePlayer = 0;
 var assistPlayer = 0;
 var scoreHome = document.querySelector("#scoreHome");
@@ -164,18 +154,26 @@ scoreAway.addEventListener("click", function(){
 //Shot
 var shot = document.querySelector("#shot");
 var shotModal = document.querySelector("#shotModal");
-var shotPlayer = document.querySelector("#shotPlayer");
+//var shotPlayer = document.querySelector("#shotPlayer");
 var shotTaker = document.querySelector("#shotTaker");
+var shotHome = document.querySelector("#shotHome");
+var shotAway = document.querySelector("#shotAway");
 
 shot.addEventListener("click", function(){
   shotModal.style.display = "block";
 })
 
-shotPlayer.addEventListener("click", function(){
+shotHome.addEventListener("click", function(){
   shotTaker = document.querySelector("#shotTaker").value;
   shotModal.style.display = "none";
-  alert(shotTaker + " took a shot");
+  alert(shotTaker + " took a shot for " + team1);
 
+})
+
+shotAway.addEventListener("click", function(){
+  shotTaker = document.querySelector("#shotTaker").value;
+  shotModal.style.display = "none";
+  alert(shotTaker + " took a shot for " + team2);
 })
 
 //Penalty
@@ -185,34 +183,54 @@ var penaltyList = document.querySelector("#penaltyList");
 var penaltyTime = document.querySelector("#penaltyTime");
 var penaltySubmit = document.querySelector("#penaltySubmit");
 var penaltyForm = document.querySelector("#penaltyForm");
+var penaltyHome = document.querySelector("#penaltyHome");
+var penaltyAway = document.querySelector("#penaltyAway");
 
 
 penalty.addEventListener("click", function(){
   penaltyModal.style.display = "block";
 })
 
-penaltySubmit.addEventListener("click", function(){
+penaltyHome.addEventListener("click", function(){
   penaltyAgainst = penaltyAgainst.value;
   penaltyList = penaltyList.value;
   penaltyTime = penaltyTime.value;
   penaltyModal.style.display = "none";
-  alert(penaltyAgainst + " committed a " + penaltyTime + " penalty for " + penaltyList);
+  alert("Player " + penaltyAgainst + " of " + team1 + " committed a " + penaltyTime + " penalty for " + penaltyList);
+  penaltyForm.reset();
+})
+
+penaltyAway.addEventListener("click", function(){
+  penaltyAgainst = penaltyAgainst.value;
+  penaltyList = penaltyList.value;
+  penaltyTime = penaltyTime.value;
+  penaltyModal.style.display = "none";
+  alert("Player " + penaltyAgainst + " of " + team2 + " committed a " + penaltyTime + " penalty for " + penaltyList);
   penaltyForm.reset();
 })
 
 //Golie Save
 var goalieSave = document.querySelector("#goalieSave");
 var goalieModal = document.querySelector("#goalieModal");
-var goaliePlayer = document.querySelector("#goaliePlayer");
+//var goaliePlayer = document.querySelector("#goaliePlayer");
 var goalieTaker = document.querySelector("#goalieTaker");
+var saveHome = document.querySelector("#saveHome");
+var saveAway = document.querySelector("#saveAway");
 
 goalieSave.addEventListener("click", function(){
   goalieModal.style.display = "block";
 })
 
-goaliePlayer.addEventListener("click", function(){
+saveHome.addEventListener("click", function(){
   goalieTaker = document.querySelector("#goalieTaker").value;
   goalieModal.style.display = "none";
-  alert(goalieTaker + " saved the shot!");
+  alert(goalieTaker + " of " + team1 + " saved the shot!");
+
+})
+
+saveAway.addEventListener("click", function(){
+  goalieTaker = document.querySelector("#goalieTaker").value;
+  goalieModal.style.display = "none";
+  alert(goalieTaker + " of " + team2 + " saved the shot!");
 
 })
