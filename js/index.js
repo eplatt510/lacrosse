@@ -26,12 +26,12 @@ for (var i = 0; i < square.length; i++){
   square[i].addEventListener("click", function(){
     for (var j = 0; j < homeTeam.length; j++){
       homeTeam[j].textContent = team1;
+      console.log(homeTeam[j]);
     }
     for (var k = 0; k < awayTeam.length; k++){
       awayTeam[k].textContent = team2;
+      console.log(awayTeam[k]);
     }
-    //awayTeam.textContent = team2;
-    console.log(homeTeam[j] + awayTeam[k]);
   })
 }
 
