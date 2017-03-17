@@ -125,6 +125,8 @@ var assistPlayer = 0;
 
 
 assist.addEventListener("click", function(){
+  homeTeam.textContent = JSON.parse(localStorage.getItem("teams[0]"));
+  awayTeam.textContent = team2;
   assistModal.style.display = "block";
 })
 
