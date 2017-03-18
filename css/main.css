@@ -102,7 +102,7 @@ h1 {
 
  button:hover {
    color: white;
-   background: steelblue;
+   /*background: steelblue;*/
  }
 
  /*modal style*/
