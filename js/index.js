@@ -19,6 +19,10 @@ var close = document.getElementsByClassName("close");
 var square = document.querySelectorAll(".square");
 var homeTeam = document.querySelectorAll(".homeTeam");
 var awayTeam = document.querySelectorAll(".awayTeam");
+var tickerUl = document.querySelector("#ticker");
+var penaltyAgainst;
+var penaltyList;
+var penaltyTime;
 
 for (var i = 0; i < square.length; i++){
   square[i].addEventListener("click", function(){
@@ -29,6 +33,14 @@ for (var i = 0; i < square.length; i++){
       awayTeam[k].textContent = team2;
     }
   })
+}
+
+function appendLi(message){
+  var li = document.createElement("li");
+  var time = new Date();
+  var currentTime = time.getHours() + ":" + time.getMinutes();
+  li.appendChild(document.createTextNode(currentTime + message));
+  tickerUl.appendChild(li);
 }
 
 enterTeams.addEventListener("click", function(){
@@ -122,6 +134,7 @@ groundBallWins.addEventListener("click", function(){
   groundBallWinner = document.querySelector("#groundBallWinner").value;
   groundBallModal.style.display = "none";
   alert(groundBallWinner + " of " + groundBallWinTeam + " got the Ground Ball");
+  appendLi(" |  " + groundBallWinner + " of " + groundBallWinTeam + " got the Ground Ball");
 })
 
 //Assist
@@ -142,6 +155,7 @@ scoreHome.addEventListener("click", function(){
   assistPlayer = document.querySelector("#assistPlayer").value;
   assistModal.style.display = "none";
   alert(team1 + " scores! " + scorePlayer + " scored and " + assistPlayer + " assisted!");
+  appendLi(" |  " + team1 + " scores! " + scorePlayer + " scored and " + assistPlayer + " assisted!");
 })
 
 scoreAway.addEventListener("click", function(){
@@ -149,6 +163,7 @@ scoreAway.addEventListener("click", function(){
   assistPlayer = document.querySelector("#assistPlayer").value;
   assistModal.style.display = "none";
   alert(team2 + " scores! " + scorePlayer + " scored and " + assistPlayer + " assisted!");
+  appendLi(" |  " + team2 + " scores! " + scorePlayer + " scored and " + assistPlayer + " assisted!");
 })
 
 //Shot
@@ -167,20 +182,21 @@ shotHome.addEventListener("click", function(){
   shotTaker = document.querySelector("#shotTaker").value;
   shotModal.style.display = "none";
   alert(shotTaker + " took a shot for " + team1);
-
+  appendLi(" |  " + shotTaker + " took a shot for " + team1);
 })
 
 shotAway.addEventListener("click", function(){
   shotTaker = document.querySelector("#shotTaker").value;
   shotModal.style.display = "none";
   alert(shotTaker + " took a shot for " + team2);
+  appendLi(" |  " + shotTaker + " took a shot for " + team2);
 })
 
 //Penalty
 var penalty = document.querySelector("#penalty");
-var penaltyAgainst = document.querySelector("#penaltyAgainst");
-var penaltyList = document.querySelector("#penaltyList");
-var penaltyTime = document.querySelector("#penaltyTime");
+penaltyAgainst = document.querySelector("#penaltyAgainst");
+penaltyList = document.querySelector("#penaltyList");
+penaltyTime = document.querySelector("#penaltyTime");
 var penaltySubmit = document.querySelector("#penaltySubmit");
 var penaltyForm = document.querySelector("#penaltyForm");
 var penaltyHome = document.querySelector("#penaltyHome");
@@ -197,6 +213,7 @@ penaltyHome.addEventListener("click", function(){
   penaltyTime = penaltyTime.value;
   penaltyModal.style.display = "none";
   alert("Player " + penaltyAgainst + " of " + team1 + " committed a " + penaltyTime + " penalty for " + penaltyList);
+  appendLi(" | Player " + penaltyAgainst + " of " + team1 + " committed a " + penaltyTime + " penalty for " + penaltyList);
   penaltyForm.reset();
 })
 
@@ -206,6 +223,7 @@ penaltyAway.addEventListener("click", function(){
   penaltyTime = penaltyTime.value;
   penaltyModal.style.display = "none";
   alert("Player " + penaltyAgainst + " of " + team2 + " committed a " + penaltyTime + " penalty for " + penaltyList);
+  appendLi(" | Player " + penaltyAgainst + " of " + team2 + " committed a " + penaltyTime + " penalty for " + penaltyList)
   penaltyForm.reset();
 })
 

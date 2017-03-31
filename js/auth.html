@@ -1,0 +1,151 @@
+
+<html>
+<head>
+	<title>Blogger CKEditor Sample</title>
+	<!-- <script type="text/javascript" src="/ckeditor/ckeditor.js"></script> -->
+	<script>
+	var clientId = '749600979651-mo5codlm0f395thg2j767v422sncg3rf.apps.googleusercontent.com';
+	var apiKey = 'AIzaSyDJH9ZYJgLa12OhJ5OakX9lmi3POoyRJ_E';
+	var scopes = 'https://www.googleapis.com/auth/blogger';
+
+
+	function handleClientLoad() {
+	  gapi.client.setApiKey(apiKey);
+	  window.setTimeout(checkAuth,1);
+	}
+
+	function checkAuth() {
+	  gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
+	}
+
+	function handleAuthResult(authResult) {
+	  var authorizeButton = document.getElementById('authorize-button');
+	  var createPostButton = document.getElementById('create-post');
+	  if (authResult && !authResult.error) {
+		  authorizeButton.disabled = true;
+		  authorizeButton.onclick = function() {window.alert("This shouldn't happen..."); return false;};
+	    makeApiCall();
+	    createPostButton.disabled = false;
+	    createPostButton.onclick = handlePostCreate;
+	  } else {
+		  authorizeButton.disabled = false;
+	    authorizeButton.onclick = handleAuthClick;
+	    createPostButton.disabled = true;
+	  }
+	}
+
+	function handleAuthClick(event) {
+	  gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthResult);
+	  return false;
+	}
+
+	function handlePostCreate(event) {
+		var title = document.getElementById('title').value;
+		var blogId = document.getElementById('select-blog').value;
+		var content = CKEDITOR.instances.content.getData();
+		var resource = {
+			'kind': 'blogger#post',
+			'title': title,
+			'content': content
+		};
+		console.log("Attempting blogs.post.insert({blogId:"+blogId+", resource: "+resource+"})");
+		var request = gapi.client.blogger.posts.insert({
+			'blogId': blogId,
+			'resource': resource,
+		});
+		request.execute(function(result) {
+			console.log("Result of blogger.post.insert:")
+			console.log("result.code: "+result.code);
+			console.log("result.message: "+result.message);
+		});
+	}
+
+	function makeApiCall() {
+		gapi.client.load('blogger', 'v3', function() {
+		  var blogsRequest = gapi.client.blogger.blogs.listByUser({
+		  	'userId': 'self',
+			  'fields': 'items(name,id)'
+		  });
+		  blogsRequest.execute( function(response) {
+			  var selectBlog = document.getElementById('select-blog');
+			  if (response.items != null) {
+				  console.log("You appear to have write access to the following blogs:")
+				  for (var i = 0; i < response.items.length; i++) {
+					  console.log(response.items[i].id+": "+response.items[i].name);
+					  var option = new Option(response.items[i].name, response.items[i].id);
+					  selectBlog.appendChild(option);
+				  }
+			  } else {
+				  console.log("You appear to have no blogger blogs.")
+				  window.alert("Error: Your account doesn't appear to have write permission to any Blogger blogs.");
+			  }
+		  });
+		});
+	}
+	</script>
+	<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+
+</head>
+<body>
+	<form method="post">
+
+		<p>
+			<input type="button" id="authorize-button" value="Login to Blogger" style="
+			width: 200px;
+			font-size: 14pt;
+			margin-bottom: 5pt;
+			margin-top: 5pt;
+			border-color: #aaa;
+			border-width: 1px;
+			border-radius: 5px;
+			border-style: solid;
+			box-shadow: 2px 2px 4px #ddd;
+			background: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#f4f4f4));
+			background: -moz-linear-gradient(top,  #fafafa,  #f4f4f4);
+			filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa', endColorstr='#f4f4f4');
+			"> <br/>
+			Blog <select id="select-blog" style="
+			width: 247px;
+			font-size: 14pt;
+			margin-bottom: 5pt;
+			margin-top: 5pt;
+			border-color: #aaa;
+			border-width: 1px;
+			border-radius: 5px;
+			border-style: solid;
+			"></select><br />
+			Title <input type="text" id="title" name="title" style="
+			width: 250px;
+			font-size: 14pt;
+			margin-bottom: 5pt;
+			margin-top: 5pt;
+			border-color: #aaa;
+			border-width: 1px;
+			border-radius: 5px;
+			border-style: solid;
+			box-shadow: 2px 2px 4px #ddd;
+			"><br />
+			<textarea id="content" name="content"></textarea>
+			<script type="text/javascript">
+				// CKEDITOR.replace( 'content' );
+			</script>
+		</p>
+		<p>
+			<input type="button" id="create-post" value="Create Post" style="
+			width: 200px;
+			font-size: 14pt;
+			margin-bottom: 5pt;
+			margin-top: 5pt;
+			border-color: #aaa;
+			border-width: 1px;
+			border-radius: 5px;
+			border-style: solid;
+			box-shadow: 2px 2px 4px #ddd;
+			background: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#f4f4f4));
+			background: -moz-linear-gradient(top,  #fafafa,  #f4f4f4);
+			filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa', endColorstr='#f4f4f4');
+			"/>
+		</p>
+	</form>
+</body>
+</html>
