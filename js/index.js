@@ -98,13 +98,15 @@ player1Display.addEventListener("click", function(){
   faceoffWinner = player1;
   faceoffWinnerModal.style.display = "none";
   alert(player1 + " has won the faceoff");
+  appendLi(" | " + player1 + " of " + team1 + " has won the faceoff");
 })
 
 player2Display.addEventListener("click", function(){
-  faceoffWinner = player1;
+  faceoffWinner = player2;
   //localStorage.setItem(player1, faceoffs++);
   faceoffWinnerModal.style.display = "none";
-  alert(player1 + " has won the faceoff");
+  alert(player2 + " has won the faceoff");
+  appendLi(" | " + player2 + " of " + team2 + " has won the faceoff");
   // + faceoffs + " faceoffs.");
 
 })
@@ -243,12 +245,12 @@ saveHome.addEventListener("click", function(){
   goalieTaker = document.querySelector("#goalieTaker").value;
   goalieModal.style.display = "none";
   alert(goalieTaker + " of " + team1 + " saved the shot!");
-
+  appendLi(" | " + goalieTaker + " of " + team1 + " saved the shot!");
 })
 
 saveAway.addEventListener("click", function(){
   goalieTaker = document.querySelector("#goalieTaker").value;
   goalieModal.style.display = "none";
   alert(goalieTaker + " of " + team2 + " saved the shot!");
-
+  appendLi(" | " + goalieTaker + " of " + team2 + " saved the shot!");
 })
